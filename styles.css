@@ -1,0 +1,159 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #2c3e50;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.title {
+    color: #b2bec3;
+    font-size: 3em;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(90deg, transparent, rgba(178, 190, 195, 0.1), transparent);
+    border-radius: 10px;
+    text-shadow: 
+        0 0 10px rgba(178, 190, 195, 0.5),
+        0 0 20px rgba(178, 190, 195, 0.3),
+        0 0 30px rgba(178, 190, 195, 0.1);
+    position: relative;
+    animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 
+            0 0 10px rgba(178, 190, 195, 0.5),
+            0 0 20px rgba(178, 190, 195, 0.3),
+            0 0 30px rgba(178, 190, 195, 0.1);
+    }
+    50% {
+        text-shadow: 
+            0 0 15px rgba(178, 190, 195, 0.7),
+            0 0 25px rgba(178, 190, 195, 0.5),
+            0 0 35px rgba(178, 190, 195, 0.3);
+    }
+}
+
+.slot-machine {
+    display: flex;
+    background-color: #c0392b;
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+
+.display-container {
+    width: 600px;
+    height: 400px;
+    background-color: #fff;
+    border: 20px solid gold;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-right: 40px;
+    position: relative;
+}
+
+/* 頂部和底部的遮罩，製造機械感 */
+.display-container::before,
+.display-container::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.display-container::before {
+    top: 0;
+    background: linear-gradient(to bottom, 
+        rgba(0,0,0,0.8) 0%,
+        rgba(0,0,0,0.5) 30%,
+        transparent 100%);
+}
+
+.display-container::after {
+    bottom: 0;
+    background: linear-gradient(to top, 
+        rgba(0,0,0,0.8) 0%,
+        rgba(0,0,0,0.5) 30%,
+        transparent 100%);
+}
+
+.image-container {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.image-slot {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    position: relative;
+    border-top: 2px solid rgba(0,0,0,0.1);
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+}
+
+.image-slot img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    pointer-events: none;
+    user-select: none;
+}
+
+.lever-container {
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.lever {
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: bottom center;
+}
+
+.lever-handle {
+    width: 60px;
+    height: 200px;
+    background-color: #e74c3c;
+    border-radius: 30px;
+    position: relative;
+    cursor: grab;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.lever-base {
+    width: 80px;
+    height: 40px;
+    background-color: #c0392b;
+    border-radius: 20px;
+    position: absolute;
+    bottom: -20px;
+    left: -10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
