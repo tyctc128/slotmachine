@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let lastStepTime = performance.now();
         let deceleration = 0.6;   // 減速率
         let extraSpinDistance = null;  // 額外旋轉距離
+        const offsetCorrection = -62;   // 位置修正值
         
         function step(currentTime) {
             const deltaTime = currentTime - lastStepTime;
@@ -75,12 +76,12 @@ document.addEventListener('DOMContentLoaded', function() {
             imageContainer.style.transform = `translateY(${position}px)`;
             
             if (currentPhase === 'decelerating' && speed <= 2) {
-                // 計算最後一個進入視野的圖片位置，加上隨機距離
+                // 計算最後一個進入視野的圖片位置，加上隨機距離和位置修正
                 let adjustedPosition = position - (extraSpinDistance || 0);
-                let currentSlot = Math.floor(-adjustedPosition / slotHeight);
+                let currentSlot = Math.floor((-adjustedPosition - offsetCorrection) / slotHeight);
                 // 確保在有效範圍內
                 currentSlot = Math.max(0, Math.min(currentSlot + 1, totalImages - 1));
-                const finalPosition = -currentSlot * slotHeight;
+                const finalPosition = (-currentSlot * slotHeight) + offsetCorrection;
                 
                 // 緩慢移動到目標位置
                 const moveToTarget = () => {
