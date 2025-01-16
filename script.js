@@ -41,9 +41,10 @@ document.addEventListener('DOMContentLoaded', function() {
         let maxSpeed = 200;       // 最高速度
         let currentPhase = 'accelerating';
         let spinCount = 0;
-        let targetSpins = 2 + Math.floor(Math.random() * 1);  // 2-3次旋轉
+        let targetSpins = 2 + Math.floor(Math.random() * 2);  // 2-3次旋轉
         let lastStepTime = performance.now();
         let deceleration = 0.6;   // 減速率
+        let extraSpinDistance = null;  // 額外旋轉距離
         
         function step(currentTime) {
             const deltaTime = currentTime - lastStepTime;
@@ -58,6 +59,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 spinCount++;
                 if (spinCount > targetSpins) {
                     currentPhase = 'decelerating';
+                    // 當開始減速時，決定額外旋轉的隨機距離
+                    extraSpinDistance = Math.random() * slotHeight;
                 }
             } else if (currentPhase === 'decelerating') {
                 speed = Math.max(0, speed * (1 - deceleration * (deltaTime / 1000)));
@@ -72,8 +75,9 @@ document.addEventListener('DOMContentLoaded', function() {
             imageContainer.style.transform = `translateY(${position}px)`;
             
             if (currentPhase === 'decelerating' && speed <= 2) {
-                // 計算最後一個進入視野的圖片位置
-                let currentSlot = Math.floor(-position / slotHeight);
+                // 計算最後一個進入視野的圖片位置，加上隨機距離
+                let adjustedPosition = position - (extraSpinDistance || 0);
+                let currentSlot = Math.floor(-adjustedPosition / slotHeight);
                 // 確保在有效範圍內
                 currentSlot = Math.max(0, Math.min(currentSlot + 1, totalImages - 1));
                 const finalPosition = -currentSlot * slotHeight;
