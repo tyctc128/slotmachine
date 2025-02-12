@@ -1,4 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // 隨機排列圖片
+    function shuffleImages() {
+        const imageSlots = Array.from(document.querySelectorAll('.image-slot'));
+        const container = document.querySelector('.image-container');
+        
+        // 創建一個臨時數組來存儲打亂後的元素
+        const shuffledArray = [...imageSlots];
+        
+        // Fisher-Yates 洗牌算法
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+        }
+        
+        // 清空容器
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
+        
+        // 按照打亂後的順序重新添加元素
+        shuffledArray.forEach(slot => {
+            container.appendChild(slot);
+        });
+    }
+    
+    // 在頁面加載時執行隨機排列
+    shuffleImages();
+
     const imageContainer = document.querySelector('.image-container');
     const lever = document.getElementById('lever');
     const totalImages = document.querySelectorAll('.image-slot').length;
